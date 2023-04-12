@@ -5,6 +5,7 @@ import net.kaupenjoe.magnificentstaffs.entity.ModEntities;
 import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.item.ModCreativeModeTab;
 import net.kaupenjoe.magnificentstaffs.item.ModItems;
+import net.kaupenjoe.magnificentstaffs.particles.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,6 +31,7 @@ public class StaffsMod {
 
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
+        ModParticles.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

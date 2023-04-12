@@ -1,7 +1,9 @@
 package net.kaupenjoe.magnificentstaffs.entity.custom;
 
 import net.kaupenjoe.magnificentstaffs.entity.ModEntities;
+import net.kaupenjoe.magnificentstaffs.particles.ModParticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
@@ -26,7 +28,7 @@ public class BasicMagicProjectileEntity extends Projectile {
         setOwner(player);
         BlockPos blockpos = player.blockPosition();
         double d0 = (double)blockpos.getX() + 0.5D;
-        double d1 = (double)blockpos.getY() + 1.5D;
+        double d1 = (double)blockpos.getY() + 1.75D;
         double d2 = (double)blockpos.getZ() + 0.5D;
         this.moveTo(d0, d1, d2, this.getYRot(), this.getXRot());
     }
@@ -51,6 +53,15 @@ public class BasicMagicProjectileEntity extends Projectile {
         double d2 = this.getZ() + vec3.z;
         this.updateRotation();
 
+        double d5 = vec3.x;
+        double d6 = vec3.y;
+        double d7 = vec3.z;
+
+        for(int i = 1; i < 5; ++i) {
+            this.level.addParticle(ModParticles.AMETHYST_MAGIC_PARTICLES.get(), d0-(d5*2), d1-(d6*2), d2-(d7*2),
+                    -d5, -d6 - 0.1D, -d7);
+        }
+
         if (this.level.getBlockStates(this.getBoundingBox()).noneMatch(BlockBehaviour.BlockStateBase::isAir)) {
             this.discard();
         } else if (this.isInWaterOrBubble()) {
@@ -69,6 +80,14 @@ public class BasicMagicProjectileEntity extends Projectile {
     @Override
     protected void onHitEntity(EntityHitResult hitResult) {
         super.onHitEntity(hitResult);
-        System.out.println("YO!");
+
+        for(int x = 0; x < 360; ++x) {
+            for(int y = 0; y < 360; ++y) {
+                if(x % 20 == 0 && y % 20 == 0) {
+                    this.level.addParticle(ModParticles.AMETHYST_MAGIC_PARTICLES.get(), this.getX(), this.getY(), this.getZ(),
+                            Math.cos(x) * 0.15d, Math.cos(y) * 0.15d, Math.sin(x) * 0.15d);
+                }
+            }
+        }
     }
 }
