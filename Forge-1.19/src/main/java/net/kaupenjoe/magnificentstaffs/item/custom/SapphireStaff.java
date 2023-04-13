@@ -11,8 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class AmethystStaff extends Item {
-    public AmethystStaff(Properties properties) {
+public class SapphireStaff extends Item {
+    public SapphireStaff(Properties properties) {
         super(properties);
     }
 
@@ -23,7 +23,7 @@ public class AmethystStaff extends Item {
         player.getCooldowns().addCooldown(this, 10);
         if (!level.isClientSide) {
             BasicMagicProjectileEntity magicProjectile = new BasicMagicProjectileEntity(level, player);
-            magicProjectile.setType(BasicMagicProjectileEntity.MagicProjectileType.AMETHYST);
+            magicProjectile.setType(BasicMagicProjectileEntity.MagicProjectileType.SAPPHIRE);
             magicProjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
             level.addFreshEntity(magicProjectile);
         }
@@ -32,6 +32,7 @@ public class AmethystStaff extends Item {
         if (!player.getAbilities().instabuild) {
             itemstack.shrink(1);
         }
+
 
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
     }

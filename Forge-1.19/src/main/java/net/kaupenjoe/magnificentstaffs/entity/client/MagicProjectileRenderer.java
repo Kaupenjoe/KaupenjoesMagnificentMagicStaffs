@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import net.kaupenjoe.magnificentstaffs.StaffsMod;
 import net.kaupenjoe.magnificentstaffs.entity.custom.BasicMagicProjectileEntity;
 import net.kaupenjoe.magnificentstaffs.entity.layers.ModModelLayers;
+import net.kaupenjoe.magnificentstaffs.util.MagicColorUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -13,6 +14,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.joml.Vector4f;
 
 public class MagicProjectileRenderer extends EntityRenderer<BasicMagicProjectileEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(StaffsMod.MOD_ID, "textures/entity/magic_projectile.png");
@@ -28,7 +30,9 @@ public class MagicProjectileRenderer extends EntityRenderer<BasicMagicProjectile
         p_116114_.mulPose(Axis.YP.rotationDegrees(Mth.lerp(p_116113_, entity.yRotO, entity.getYRot()) - 90.0F));
         p_116114_.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(p_116113_, entity.xRotO, entity.getXRot()) + 90.0F));
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(p_116115_, this.model.renderType(this.getTextureLocation(entity)), false, false);
-        this.model.renderToBuffer(p_116114_, vertexconsumer, p_116116_, OverlayTexture.NO_OVERLAY, 0.5F, 0.1F, 0.6F, 0.8F);
+        Vector4f colorVector = MagicColorUtils.PROJECTILE_VECTOR_BY_ORDINAL.get(entity.getProjectileType());
+
+        this.model.renderToBuffer(p_116114_, vertexconsumer, p_116116_, OverlayTexture.NO_OVERLAY, colorVector.x, colorVector.y, colorVector.z, colorVector.w);
         p_116114_.popPose();
         super.render(entity, p_116112_, p_116113_, p_116114_, p_116115_, p_116116_);
     }

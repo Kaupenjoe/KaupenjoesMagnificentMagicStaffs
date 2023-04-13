@@ -46,13 +46,14 @@ public class StaffsMod {
 
     private void addCreative(CreativeModeTabEvent.BuildContents event) {
         if (event.getTab() == ModCreativeModeTab.STAFF_TAB) {
-            event.accept(ModItems.AMETHYST_STAFF);
-            event.accept(ModItems.BLIZZARD_STAFF);
-            event.accept(ModItems.DIAMOND_STAFF);
-            event.accept(ModItems.EMERALD_STAFF);
-            event.accept(ModItems.METEORITE_STAFF);
-            event.accept(ModItems.RUBY_STAFF);
             event.accept(ModItems.SAPPHIRE_STAFF);
+            event.accept(ModItems.DIAMOND_STAFF);
+            event.accept(ModItems.RUBY_STAFF);
+            event.accept(ModItems.AMETHYST_STAFF);
+            event.accept(ModItems.EMERALD_STAFF);
+
+            event.accept(ModItems.BLIZZARD_STAFF);
+            event.accept(ModItems.METEORITE_STAFF);
             event.accept(ModItems.SCULKBEAM_STAFF);
             event.accept(ModItems.STAFF_OF_EARTH);
         }

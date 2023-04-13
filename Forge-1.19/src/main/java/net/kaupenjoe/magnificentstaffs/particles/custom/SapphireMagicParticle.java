@@ -11,11 +11,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-public class AmethystMagicParticle extends MagicParticle {
-    protected AmethystMagicParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, SpriteSet spriteSet, double xd, double yd, double zd) {
+public class SapphireMagicParticle extends MagicParticle {
+    protected SapphireMagicParticle(ClientLevel level, double xCoord, double yCoord, double zCoord, SpriteSet spriteSet, double xd, double yd, double zd) {
         super(level, xCoord, yCoord, zCoord, spriteSet, xd, yd, zd);
-
-        Vector4f colorVector = MagicColorUtils.PROJECTILE_VECTOR.get(BasicMagicProjectileEntity.MagicProjectileType.AMETHYST);
+        
+        Vector4f colorVector = MagicColorUtils.PROJECTILE_VECTOR.get(BasicMagicProjectileEntity.MagicProjectileType.SAPPHIRE);
         this.rCol = colorVector.x;
         this.gCol = colorVector.y;
         this.bCol = colorVector.z;
@@ -33,7 +33,7 @@ public class AmethystMagicParticle extends MagicParticle {
         public Particle createParticle(SimpleParticleType particleType, ClientLevel level,
                                        double x, double y, double z,
                                        double dx, double dy, double dz) {
-            return new AmethystMagicParticle(level, x, y, z, this.sprites, dx, dy, dz);
+            return new SapphireMagicParticle(level, x, y, z, this.sprites, dx, dy, dz);
         }
     }
 }

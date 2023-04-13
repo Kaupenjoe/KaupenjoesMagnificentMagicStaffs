@@ -17,6 +17,14 @@ public class ModParticles {
 
     public static final RegistryObject<SimpleParticleType> AMETHYST_MAGIC_PARTICLES =
             PARTICLE_TYPES.register("amethyst_magic_particles", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> SAPPHIRE_MAGIC_PARTICLES =
+            PARTICLE_TYPES.register("sapphire_magic_particles", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> DIAMOND_MAGIC_PARTICLES =
+            PARTICLE_TYPES.register("diamond_magic_particles", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> RUBY_MAGIC_PARTICLES =
+            PARTICLE_TYPES.register("ruby_magic_particles", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> EMERALD_MAGIC_PARTICLES =
+            PARTICLE_TYPES.register("emerald_magic_particles", () -> new SimpleParticleType(true));
 
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
