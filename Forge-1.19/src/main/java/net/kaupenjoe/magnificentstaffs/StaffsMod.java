@@ -6,6 +6,7 @@ import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.item.ModCreativeModeTab;
 import net.kaupenjoe.magnificentstaffs.item.ModItems;
 import net.kaupenjoe.magnificentstaffs.particles.ModParticles;
+import net.kaupenjoe.magnificentstaffs.sound.ModSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -32,6 +33,7 @@ public class StaffsMod {
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
         ModParticles.register(modEventBus);
+        ModSound.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -56,6 +58,9 @@ public class StaffsMod {
             event.accept(ModItems.METEORITE_STAFF);
             event.accept(ModItems.SCULKBEAM_STAFF);
             event.accept(ModItems.STAFF_OF_EARTH);
+
+            event.accept(ModItems.RUBY);
+            event.accept(ModItems.SAPPHIRE);
         }
     }
 

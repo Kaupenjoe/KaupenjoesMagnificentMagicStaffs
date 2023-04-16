@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    " S ",
+    "S  "
+  ],
+  "key": {
+    "#": {
+      "item": "magnificentstaffs:ruby"
+    },
+    "S": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "magnificentstaffs:ruby_staff"
+  }
+}

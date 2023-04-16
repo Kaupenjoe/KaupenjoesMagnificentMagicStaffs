@@ -2,6 +2,7 @@ package net.kaupenjoe.magnificentstaffs.entity.custom;
 
 import net.kaupenjoe.magnificentstaffs.entity.ModEntities;
 import net.kaupenjoe.magnificentstaffs.particles.ModParticles;
+import net.kaupenjoe.magnificentstaffs.sound.ModSound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.protocol.Packet;
@@ -9,12 +10,16 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -31,6 +36,10 @@ public class BasicMagicProjectileEntity extends Projectile {
     }
 
     private static final EntityDataAccessor<Integer> TYPE =
+            SynchedEntityData.defineId(BasicMagicProjectileEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> HIT =
+            SynchedEntityData.defineId(BasicMagicProjectileEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> COUNT =
             SynchedEntityData.defineId(BasicMagicProjectileEntity.class, EntityDataSerializers.INT);
 
     public BasicMagicProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
@@ -50,6 +59,8 @@ public class BasicMagicProjectileEntity extends Projectile {
     @Override
     protected void defineSynchedData() {
         this.entityData.define(TYPE, 0);
+        this.entityData.define(COUNT, 0);
+        this.entityData.define(HIT, false);
     }
 
     public void setType(MagicProjectileType type) {
@@ -63,6 +74,12 @@ public class BasicMagicProjectileEntity extends Projectile {
     @Override
     public void tick() {
         super.tick();
+        if(this.entityData.get(HIT)) {
+            this.entityData.set(COUNT, this.entityData.get(COUNT) + 1);
+            if(this.entityData.get(COUNT) >= 5) {
+                this.destroy();
+            }
+        }
         if (this.tickCount >= 300) {
             this.remove(RemovalReason.DISCARDED);
         }
@@ -112,14 +129,42 @@ public class BasicMagicProjectileEntity extends Projectile {
     @Override
     protected void onHitEntity(EntityHitResult hitResult) {
         super.onHitEntity(hitResult);
+        Entity hitEntity = hitResult.getEntity();
+        Entity owner = this.getOwner();
 
-        for(int x = 0; x < 360; ++x) {
-            for(int y = 0; y < 360; ++y) {
-                if(x % 20 == 0 && y % 20 == 0) {
-                    this.level.addParticle(getParticleType(), this.getX(), this.getY(), this.getZ(),
-                            Math.cos(x) * 0.15d, Math.cos(y) * 0.15d, Math.sin(x) * 0.15d);
-                }
+        if(hitEntity == owner) {
+            return;
+        }
+
+        this.level.playSound(null, this.getX(), this.getY(), this.getZ(), ModSound.MAGIC_IMPACT_1.get(), SoundSource.NEUTRAL,
+                2F, 1F);
+
+        LivingEntity livingentity = owner instanceof LivingEntity ? (LivingEntity)owner : null;
+        float damage = switch (this.entityData.get(TYPE)) {
+            case 1 -> 9f;
+            case 2 -> 5f;
+            default -> 3f;
+            case 4 -> 7f;
+            case 5 -> 4f;
+        };
+        hitEntity.hurt(this.damageSources().mobProjectile(this, livingentity), damage);
+    }
+
+    @Override
+    protected void onHit(HitResult hitResult) {
+        super.onHit(hitResult);
+        for(int x = 0; x < 18; ++x) {
+            for(int y = 0; y < 18; ++y) {
+                this.level.addParticle(getParticleType(), this.getX(), this.getY(), this.getZ(),
+                        Math.cos(x*20) * 0.15d, Math.cos(y*20) * 0.15d, Math.sin(x*20) * 0.15d);
             }
         }
+        this.entityData.set(HIT, true);
+        //this.destroy();
+    }
+
+    private void destroy() {
+        this.discard();
+        this.level.gameEvent(GameEvent.ENTITY_DAMAGE, this.position(), GameEvent.Context.of(this));
     }
 }

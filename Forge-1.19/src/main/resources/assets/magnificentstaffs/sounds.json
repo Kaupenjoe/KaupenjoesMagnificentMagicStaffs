@@ -1,0 +1,20 @@
+{
+  "magic-spell-base-lower": {
+    "subtitle": "sounds.magnificentstaffs.magic-spell-base-lower",
+    "sounds": [
+      "magnificentstaffs:magic-spell-base-lower"
+    ]
+  },
+  "magic-impact-1": {
+    "subtitle": "sounds.magnificentstaffs.magic-impact-1",
+    "sounds": [
+      "magnificentstaffs:magic-impact-1"
+    ]
+  },
+  "magic-missle": {
+    "subtitle": "sounds.magnificentstaffs.magic-missle",
+    "sounds": [
+      "magnificentstaffs:magic-missle"
+    ]
+  }
+}

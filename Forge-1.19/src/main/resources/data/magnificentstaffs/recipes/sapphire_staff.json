@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    " S ",
+    "S  "
+  ],
+  "key": {
+    "#": {
+      "item": "magnificentstaffs:sapphire"
+    },
+    "S": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "magnificentstaffs:sapphire_staff"
+  }
+}

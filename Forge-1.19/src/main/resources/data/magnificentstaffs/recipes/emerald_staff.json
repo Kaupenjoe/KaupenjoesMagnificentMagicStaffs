@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    " S ",
+    "S  "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:emerald"
+    },
+    "S": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "magnificentstaffs:emerald_staff"
+  }
+}
