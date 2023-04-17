@@ -12,5 +12,8 @@
   "item.magnificentstaffs.sapphire": "Sapphire",
   "item.magnificentstaffs.ruby": "Ruby",
 
+  "block.magnificentstaffs.ruby_ore": "Ruby Ore",
+  "block.magnificentstaffs.sapphire_ore": "Sapphire Ore",
+
   "creativemodetab.staffs_tab": "Magic Staffs"
 }

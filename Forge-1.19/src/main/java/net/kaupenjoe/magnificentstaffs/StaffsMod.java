@@ -1,6 +1,7 @@
 package net.kaupenjoe.magnificentstaffs;
 
 import com.mojang.logging.LogUtils;
+import net.kaupenjoe.magnificentstaffs.block.ModBlocks;
 import net.kaupenjoe.magnificentstaffs.entity.ModEntities;
 import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.item.ModCreativeModeTab;
@@ -31,6 +32,7 @@ public class StaffsMod {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
         ModParticles.register(modEventBus);
         ModSound.register(modEventBus);
