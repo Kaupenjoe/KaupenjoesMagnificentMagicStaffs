@@ -3,6 +3,8 @@ package net.kaupenjoe.magnificentstaffs;
 import com.mojang.logging.LogUtils;
 import net.kaupenjoe.magnificentstaffs.block.ModBlocks;
 import net.kaupenjoe.magnificentstaffs.entity.ModEntities;
+import net.kaupenjoe.magnificentstaffs.entity.client.FallingMagicProjectileModel;
+import net.kaupenjoe.magnificentstaffs.entity.client.FallingProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.item.ModCreativeModeTab;
 import net.kaupenjoe.magnificentstaffs.item.ModItems;
@@ -61,6 +63,12 @@ public class StaffsMod {
             event.accept(ModItems.SCULKBEAM_STAFF);
             event.accept(ModItems.STAFF_OF_EARTH);
 
+            event.accept(ModItems.RADIATION_STAFF);
+            event.accept(ModItems.VENOM_STAFF);
+
+            event.accept(ModItems.CLINGER_STAFF);
+            event.accept(ModItems.SPECTRE_STAFF);
+
             event.accept(ModItems.RUBY);
             event.accept(ModItems.SAPPHIRE);
         }
@@ -72,6 +80,7 @@ public class StaffsMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.MAGIC_PROJECTILE.get(), MagicProjectileRenderer::new);
+            EntityRenderers.register(ModEntities.FALLING_MAGIC_PROJECTILE.get(), FallingProjectileRenderer::new);
         }
     }
 }

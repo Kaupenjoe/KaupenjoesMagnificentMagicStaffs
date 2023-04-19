@@ -18,7 +18,7 @@ public class CustomItemRenderer extends ItemRenderer {
     public CustomItemRenderer(MinecraftClient client, TextureManager manager, BakedModelManager bakery, ItemColors colors, BuiltinModelItemRenderer builtinModelItemRenderer) {
         super(client, manager, bakery, colors, builtinModelItemRenderer);
     }
-
+/*
     @Override
     public BakedModel getModel(ItemStack stack, @Nullable World world, @Nullable LivingEntity entity, int seed) {
 
@@ -35,5 +35,5 @@ public class CustomItemRenderer extends ItemRenderer {
         BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);
         return bakedModel2 == null ? this.models.getModelManager().getMissingModel() : bakedModel2;
         return super.getModel(stack, world, entity, seed);
-    }
+    }*/
 }

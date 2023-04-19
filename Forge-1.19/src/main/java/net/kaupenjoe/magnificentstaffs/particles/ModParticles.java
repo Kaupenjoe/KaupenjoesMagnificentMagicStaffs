@@ -26,6 +26,11 @@ public class ModParticles {
     public static final RegistryObject<SimpleParticleType> EMERALD_MAGIC_PARTICLES =
             PARTICLE_TYPES.register("emerald_magic_particles", () -> new SimpleParticleType(true));
 
+    public static final RegistryObject<SimpleParticleType> RADIATION_MAGIC_PARTICLES =
+            PARTICLE_TYPES.register("radiation_magic_particles", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> VENOM_MAGIC_PARTICLES =
+            PARTICLE_TYPES.register("venom_magic_particles", () -> new SimpleParticleType(true));
+
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }

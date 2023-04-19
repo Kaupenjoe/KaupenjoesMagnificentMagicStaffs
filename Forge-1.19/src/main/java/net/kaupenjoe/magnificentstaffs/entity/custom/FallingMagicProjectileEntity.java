@@ -11,7 +11,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -23,52 +22,42 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-public class BasicMagicProjectileEntity extends Projectile {
-    public enum MagicProjectileType {
-        SAPPHIRE,
-        DIAMOND,
-        RUBY,
-        AMETHYST,
-        EMERALD,
-        RADIATION,
-        VENOM
+public class FallingMagicProjectileEntity extends Projectile {
+    public enum FallingMagicProjectileType {
+        METEOR,
+        BLIZZARD
     }
 
     private static final EntityDataAccessor<Integer> TYPE =
-            SynchedEntityData.defineId(BasicMagicProjectileEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> HIT =
-            SynchedEntityData.defineId(BasicMagicProjectileEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> COUNT =
-            SynchedEntityData.defineId(BasicMagicProjectileEntity.class, EntityDataSerializers.INT);
+            SynchedEntityData.defineId(FallingMagicProjectileEntity.class, EntityDataSerializers.INT);
 
-    public BasicMagicProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
+    public FallingMagicProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
     }
 
-    public BasicMagicProjectileEntity(Level level, Player player) {
+    public FallingMagicProjectileEntity(Level level, Player player, BlockPos spawnLoc) {
         this(ModEntities.MAGIC_PROJECTILE.get(), level);
         setOwner(player);
-        BlockPos blockpos = player.blockPosition();
-        double d0 = (double)blockpos.getX() + 0.5D;
-        double d1 = (double)blockpos.getY() + 1.75D;
-        double d2 = (double)blockpos.getZ() + 0.5D;
+
+        double d0 = (double) spawnLoc.getX() + 0.5D;
+        double d1 = (double) spawnLoc.getY();
+        double d2 = (double) spawnLoc.getZ() + 0.5D;
         this.moveTo(d0, d1, d2, this.getYRot(), this.getXRot());
     }
 
     @Override
     protected void defineSynchedData() {
         this.entityData.define(TYPE, 0);
-        this.entityData.define(COUNT, 0);
-        this.entityData.define(HIT, false);
     }
 
-    public void setType(MagicProjectileType type) {
+    public void setType(FallingMagicProjectileType type) {
         this.entityData.set(TYPE, type.ordinal());
     }
 
@@ -79,15 +68,6 @@ public class BasicMagicProjectileEntity extends Projectile {
     @Override
     public void tick() {
         super.tick();
-        if(this.entityData.get(HIT)) {
-            this.entityData.set(COUNT, this.entityData.get(COUNT) + 1);
-            if(this.entityData.get(COUNT) >= 5) {
-                this.destroy();
-            }
-        }
-        if (this.tickCount >= 300) {
-            this.remove(RemovalReason.DISCARDED);
-        }
         Vec3 vec3 = this.getDeltaMovement();
         HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
         if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult))
@@ -101,7 +81,7 @@ public class BasicMagicProjectileEntity extends Projectile {
         double d6 = vec3.y;
         double d7 = vec3.z;
 
-        for(int i = 1; i < 5; ++i) {
+        for(int i = 1; i < 3; ++i) {
             this.level.addParticle(getParticleType(), d0-(d5*2), d1-(d6*2), d2-(d7*2),
                     -d5, -d6 - 0.1D, -d7);
         }
@@ -125,11 +105,6 @@ public class BasicMagicProjectileEntity extends Projectile {
         return switch (this.entityData.get(TYPE)) {
             default -> ModParticles.SAPPHIRE_MAGIC_PARTICLES.get();
             case 1 -> ModParticles.DIAMOND_MAGIC_PARTICLES.get();
-            case 2 -> ModParticles.RUBY_MAGIC_PARTICLES.get();
-            case 3 -> ModParticles.AMETHYST_MAGIC_PARTICLES.get();
-            case 4 -> ModParticles.EMERALD_MAGIC_PARTICLES.get();
-            case 5 -> ModParticles.RADIATION_MAGIC_PARTICLES.get();
-            case 6 -> ModParticles.VENOM_MAGIC_PARTICLES.get();
         };
     }
 
@@ -155,21 +130,6 @@ public class BasicMagicProjectileEntity extends Projectile {
             case 4 -> 4f;
             case 5, 6 -> 2f;
         };
-        boolean hurt = hitEntity.hurt(this.damageSources().mobProjectile(this, livingentity), damage);
-
-        if (hurt) {
-            if(this.entityData.get(TYPE) == 5) {
-                if(hitEntity instanceof LivingEntity livingHitEntity) {
-                    livingHitEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 60), owner);
-                }
-            }
-
-            if(this.entityData.get(TYPE) == 6) {
-                if(hitEntity instanceof LivingEntity livingHitEntity) {
-                    livingHitEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1), owner);
-                }
-            }
-        }
     }
 
     @Override
@@ -182,21 +142,8 @@ public class BasicMagicProjectileEntity extends Projectile {
             }
         }
 
-        if(this.level.isClientSide()) {
-            return;
-        }
-
-        if(hitResult.getType() == HitResult.Type.ENTITY && hitResult instanceof EntityHitResult entityHitResult) {
-            Entity hit = entityHitResult.getEntity();
-            Entity owner = this.getOwner();
-            if(owner != hit) {
-                this.entityData.set(HIT, true);
-            }
-        } else {
-            this.entityData.set(HIT, true);
-        }
-
-        //this.destroy();
+        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3f, Level.ExplosionInteraction.MOB);
+        this.discard();
     }
 
     private void destroy() {

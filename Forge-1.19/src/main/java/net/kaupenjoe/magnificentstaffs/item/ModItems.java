@@ -24,13 +24,24 @@ public class ModItems {
             () -> new SapphireStaff(new Item.Properties().durability(256)));
 
     public static final RegistryObject<Item> BLIZZARD_STAFF = ITEMS.register("blizzard_staff",
-            () -> new Item(new Item.Properties().durability(128)));
+            () -> new BlizzardStaff(new Item.Properties().durability(1024)));
     public static final RegistryObject<Item> METEORITE_STAFF = ITEMS.register("meteorite_staff",
             () -> new Item(new Item.Properties().durability(128)));
-    public static final RegistryObject<Item> SCULKBEAM_STAFF = ITEMS.register("sculkbeam_staff",
-            () -> new Item(new Item.Properties().durability(128)));
+
+    public static final RegistryObject<Item> RADIATION_STAFF = ITEMS.register("radiation_staff",
+            () -> new RadiationStaff(new Item.Properties().durability(1024)));
+    public static final RegistryObject<Item> VENOM_STAFF = ITEMS.register("venom_staff",
+            () -> new VenomStaff(new Item.Properties().durability(2048)));
+
     public static final RegistryObject<Item> STAFF_OF_EARTH = ITEMS.register("staff_of_earth",
             () -> new Item(new Item.Properties().durability(128)));
+    public static final RegistryObject<Item> CLINGER_STAFF = ITEMS.register("clinger_staff",
+            () -> new Item(new Item.Properties().durability(1024)));
+
+    public static final RegistryObject<Item> SCULKBEAM_STAFF = ITEMS.register("sculkbeam_staff",
+            () -> new Item(new Item.Properties().durability(128)));
+    public static final RegistryObject<Item> SPECTRE_STAFF = ITEMS.register("spectre_staff",
+            () -> new Item(new Item.Properties().durability(1024)));
 
     public static final RegistryObject<Item> SAPPHIRE = ITEMS.register("sapphire",
             () -> new Item(new Item.Properties()));

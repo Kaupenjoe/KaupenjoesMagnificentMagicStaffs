@@ -26,5 +26,8 @@ public class ModEventBusEvents {
         event.registerSpriteSet(ModParticles.DIAMOND_MAGIC_PARTICLES.get(), DiamondMagicParticle.Provider::new);
         event.registerSpriteSet(ModParticles.RUBY_MAGIC_PARTICLES.get(), RubyMagicParticle.Provider::new);
         event.registerSpriteSet(ModParticles.EMERALD_MAGIC_PARTICLES.get(), EmeraldMagicParticle.Provider::new);
+
+        event.registerSpriteSet(ModParticles.RADIATION_MAGIC_PARTICLES.get(), RadiationMagicParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.VENOM_MAGIC_PARTICLES.get(), VenomMagicParticle.Provider::new);
     }
 }
