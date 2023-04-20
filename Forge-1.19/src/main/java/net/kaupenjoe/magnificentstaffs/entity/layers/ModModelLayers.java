@@ -10,4 +10,7 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation BLIZZARD_PROJECTILE_LAYER = new ModelLayerLocation(
             new ResourceLocation(StaffsMod.MOD_ID,"blizzard_projectile"), "blizzard_projectile");
+
+    public static final ModelLayerLocation CLINGER_WALL_LAYER = new ModelLayerLocation(
+            new ResourceLocation(StaffsMod.MOD_ID,"clinger_wall_layer"), "clinger_wall_layer");
 }

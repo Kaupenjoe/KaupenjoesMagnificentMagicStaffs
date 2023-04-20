@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.kaupenjoe.magnificentstaffs.block.ModBlocks;
 import net.kaupenjoe.magnificentstaffs.entity.ModEntities;
 import net.kaupenjoe.magnificentstaffs.entity.client.BlizzardProjectileRenderer;
+import net.kaupenjoe.magnificentstaffs.entity.client.ClingerWallRenderer;
 import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.item.ModCreativeModeTab;
 import net.kaupenjoe.magnificentstaffs.item.ModItems;
@@ -78,6 +79,7 @@ public class StaffsMod {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.MAGIC_PROJECTILE.get(), MagicProjectileRenderer::new);
             EntityRenderers.register(ModEntities.BLIZZARD_PROJECTILE.get(), BlizzardProjectileRenderer::new);
+            EntityRenderers.register(ModEntities.CLINGER_WALL_ENTITY.get(), ClingerWallRenderer::new);
         }
     }
 }

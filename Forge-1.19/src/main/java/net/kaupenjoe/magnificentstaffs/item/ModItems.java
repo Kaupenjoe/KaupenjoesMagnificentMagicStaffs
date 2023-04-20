@@ -36,7 +36,7 @@ public class ModItems {
     public static final RegistryObject<Item> STAFF_OF_EARTH = ITEMS.register("staff_of_earth",
             () -> new Item(new Item.Properties().durability(128)));
     public static final RegistryObject<Item> CLINGER_STAFF = ITEMS.register("clinger_staff",
-            () -> new Item(new Item.Properties().durability(1024)));
+            () -> new ClingerStaff(new Item.Properties().durability(1024)));
 
     public static final RegistryObject<Item> SCULKBEAM_STAFF = ITEMS.register("sculkbeam_staff",
             () -> new Item(new Item.Properties().durability(128)));
