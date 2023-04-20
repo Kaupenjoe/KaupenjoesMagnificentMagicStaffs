@@ -26,7 +26,7 @@ public class ModItems {
     public static final RegistryObject<Item> BLIZZARD_STAFF = ITEMS.register("blizzard_staff",
             () -> new BlizzardStaff(new Item.Properties().durability(1024)));
     public static final RegistryObject<Item> METEORITE_STAFF = ITEMS.register("meteorite_staff",
-            () -> new Item(new Item.Properties().durability(128)));
+            () -> new MeteorStaff(new Item.Properties().durability(1024)));
 
     public static final RegistryObject<Item> RADIATION_STAFF = ITEMS.register("radiation_staff",
             () -> new RadiationStaff(new Item.Properties().durability(1024)));

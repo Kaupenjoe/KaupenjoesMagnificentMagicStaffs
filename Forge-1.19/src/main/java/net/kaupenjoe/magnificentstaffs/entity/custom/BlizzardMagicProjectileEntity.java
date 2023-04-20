@@ -7,12 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +16,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -29,45 +23,36 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
-public class FallingMagicProjectileEntity extends Projectile {
-    public enum FallingMagicProjectileType {
-        METEOR,
-        BLIZZARD
-    }
+import java.util.List;
 
-    private static final EntityDataAccessor<Integer> TYPE =
-            SynchedEntityData.defineId(FallingMagicProjectileEntity.class, EntityDataSerializers.INT);
-
-    public FallingMagicProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
+public class BlizzardMagicProjectileEntity extends Projectile {
+    public BlizzardMagicProjectileEntity(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
     }
 
-    public FallingMagicProjectileEntity(Level level, Player player, BlockPos spawnLoc) {
-        this(ModEntities.MAGIC_PROJECTILE.get(), level);
+    public BlizzardMagicProjectileEntity(Level level, Player player, BlockPos spawnLoc) {
+        this(ModEntities.BLIZZARD_PROJECTILE.get(), level);
         setOwner(player);
 
         double d0 = (double) spawnLoc.getX() + 0.5D;
         double d1 = (double) spawnLoc.getY();
         double d2 = (double) spawnLoc.getZ() + 0.5D;
         this.moveTo(d0, d1, d2, this.getYRot(), this.getXRot());
+        this.setInvulnerable(true);
     }
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(TYPE, 0);
-    }
 
-    public void setType(FallingMagicProjectileType type) {
-        this.entityData.set(TYPE, type.ordinal());
-    }
-
-    public int getProjectileType() {
-        return this.entityData.get(TYPE);
     }
 
     @Override
     public void tick() {
         super.tick();
+        if (this.tickCount >= 300) {
+            this.remove(RemovalReason.DISCARDED);
+        }
+
         Vec3 vec3 = this.getDeltaMovement();
         HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
         if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult))
@@ -102,10 +87,7 @@ public class FallingMagicProjectileEntity extends Projectile {
     }
 
     public SimpleParticleType getParticleType() {
-        return switch (this.entityData.get(TYPE)) {
-            default -> ModParticles.SAPPHIRE_MAGIC_PARTICLES.get();
-            case 1 -> ModParticles.DIAMOND_MAGIC_PARTICLES.get();
-        };
+        return ModParticles.SNOW_MAGIC_PARTICLES.get();
     }
 
     @Override
@@ -117,19 +99,12 @@ public class FallingMagicProjectileEntity extends Projectile {
         if(hitEntity == owner && this.level.isClientSide()) {
             return;
         }
-
         this.level.playSound(null, this.getX(), this.getY(), this.getZ(), ModSound.MAGIC_IMPACT_1.get(), SoundSource.NEUTRAL,
                 2F, 1F);
 
         LivingEntity livingentity = owner instanceof LivingEntity ? (LivingEntity)owner : null;
-        float damage = switch (this.entityData.get(TYPE)) {
-            default -> 3f;
-            case 1 -> 9f;
-            case 2 -> 5f;
-            case 3 -> 7f;
-            case 4 -> 4f;
-            case 5, 6 -> 2f;
-        };
+        float damage = 2f;
+        hitEntity.hurt(this.damageSources().mobProjectile(this, livingentity), damage);
     }
 
     @Override
@@ -142,12 +117,19 @@ public class FallingMagicProjectileEntity extends Projectile {
             }
         }
 
-        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3f, Level.ExplosionInteraction.MOB);
-        this.discard();
+        if(hitResult.getType() == HitResult.Type.BLOCK) {
+            AABB positionToHurt = new AABB(hitResult.getLocation(), hitResult.getLocation());
+            List<Entity> toHit;
+            toHit = this.level.getEntities(this.getOwner(), positionToHurt.inflate(2));
+            LivingEntity livingOwner = this.getOwner() instanceof LivingEntity ? (LivingEntity)this.getOwner() : null;
+            for (Entity entity : toHit) {
+                entity.hurt(this.damageSources().mobProjectile(this, livingOwner), 1f);
+            }
+        }
     }
 
-    private void destroy() {
-        this.discard();
-        this.level.gameEvent(GameEvent.ENTITY_DAMAGE, this.position(), GameEvent.Context.of(this));
+    @Override
+    public void push(double p_20286_, double p_20287_, double p_20288_) {
+        // kept empty, because the projectiles should never be pushed!
     }
 }

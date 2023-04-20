@@ -3,19 +3,16 @@ package net.kaupenjoe.magnificentstaffs;
 import com.mojang.logging.LogUtils;
 import net.kaupenjoe.magnificentstaffs.block.ModBlocks;
 import net.kaupenjoe.magnificentstaffs.entity.ModEntities;
-import net.kaupenjoe.magnificentstaffs.entity.client.FallingMagicProjectileModel;
-import net.kaupenjoe.magnificentstaffs.entity.client.FallingProjectileRenderer;
+import net.kaupenjoe.magnificentstaffs.entity.client.BlizzardProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileRenderer;
 import net.kaupenjoe.magnificentstaffs.item.ModCreativeModeTab;
 import net.kaupenjoe.magnificentstaffs.item.ModItems;
 import net.kaupenjoe.magnificentstaffs.particles.ModParticles;
 import net.kaupenjoe.magnificentstaffs.sound.ModSound;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -80,7 +77,7 @@ public class StaffsMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.MAGIC_PROJECTILE.get(), MagicProjectileRenderer::new);
-            EntityRenderers.register(ModEntities.FALLING_MAGIC_PROJECTILE.get(), FallingProjectileRenderer::new);
+            EntityRenderers.register(ModEntities.BLIZZARD_PROJECTILE.get(), BlizzardProjectileRenderer::new);
         }
     }
 }

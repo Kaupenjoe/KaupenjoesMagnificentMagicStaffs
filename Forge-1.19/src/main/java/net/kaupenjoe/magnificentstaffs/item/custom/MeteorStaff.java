@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -18,10 +19,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.joml.Vector3d;
 
-public class BlizzardStaff extends Item {
+public class MeteorStaff extends Item {
     private float maxDistance = 32f;
 
-    public BlizzardStaff(Properties properties) {
+    public MeteorStaff(Properties properties) {
         super(properties);
     }
 
@@ -43,16 +44,18 @@ public class BlizzardStaff extends Item {
             BlockPos blockpos = spawnPos[level.getRandom().nextInt(0, spawnPos.length)];
             Vector3d direction = new Vector3d(blockPlayerIsLookingAt.getX() - blockpos.getX(),blockPlayerIsLookingAt.getY() - blockpos.getY(), blockPlayerIsLookingAt.getZ() - blockpos.getZ());
 
-            BlizzardMagicProjectileEntity magicProjectile = new BlizzardMagicProjectileEntity(level, player, blockpos);
-            magicProjectile.shoot(direction.x, direction.y, direction.z,0.5F, 1.0F);
-            level.addFreshEntity(magicProjectile);
+            if(!level.getBlockState(blockpos).is(Blocks.AIR)) {
+                return InteractionResultHolder.consume(itemstack);
+            }
 
-            player.awardStat(Stats.ITEM_USED.get(this));
+            LargeFireball magicProjectile = new LargeFireball(level, player, direction.x, direction.y, direction.z, 2);
+            magicProjectile.setPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+            level.addFreshEntity(magicProjectile);
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
         if (!player.getAbilities().instabuild) {
-            itemstack.hurtAndBreak(5, player, p -> p.broadcastBreakEvent(hand));
+            itemstack.hurtAndBreak(3, player, p -> p.broadcastBreakEvent(hand));
         }
 
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
@@ -61,8 +64,8 @@ public class BlizzardStaff extends Item {
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int count, boolean p_41408_) {
         super.inventoryTick(stack, level, entity, count, p_41408_);
-        if(count % 20 == 0 && stack.getDamageValue() >= 1) {
-            // HEALING IT EVERY 20 TICKS
+        if(count % 5 == 0 && stack.getDamageValue() >= 1) {
+            // HEALING IT EVERY 5 TICKS
             stack.setDamageValue(stack.getDamageValue() - 1);
         }
     }

@@ -1,6 +1,7 @@
 package net.kaupenjoe.magnificentstaffs.event;
 
 import net.kaupenjoe.magnificentstaffs.StaffsMod;
+import net.kaupenjoe.magnificentstaffs.entity.client.BlizzardMagicProjectileModel;
 import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileModel;
 import net.kaupenjoe.magnificentstaffs.entity.layers.ModModelLayers;
 import net.kaupenjoe.magnificentstaffs.particles.ModParticles;
@@ -15,6 +16,7 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerLayers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.MAGIC_PROJECTILE_LAYER, MagicProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.BLIZZARD_PROJECTILE_LAYER, BlizzardMagicProjectileModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -29,5 +31,7 @@ public class ModEventBusEvents {
 
         event.registerSpriteSet(ModParticles.RADIATION_MAGIC_PARTICLES.get(), RadiationMagicParticle.Provider::new);
         event.registerSpriteSet(ModParticles.VENOM_MAGIC_PARTICLES.get(), VenomMagicParticle.Provider::new);
+
+        event.registerSpriteSet(ModParticles.SNOW_MAGIC_PARTICLES.get(), SnowMagicParticle.Provider::new);
     }
 }
