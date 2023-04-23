@@ -71,10 +71,10 @@ public class ClingerWallEntity extends Entity {
         }
 
         if(tickCount % 5 == 0) {
-            this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 1, this.getZ(), 0f, 0f, 0f);
-            this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 2, this.getZ(), 0f, 0f, 0f);
-            this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 3, this.getZ(), 0f, 0f, 0f);
-            this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 4, this.getZ(), 0f, 0f, 0f);
+            this.level.addParticle(ParticleTypes.CRIT, this.getX(), this.getY() + 1, this.getZ(), 0f, 0f, 0f);
+            this.level.addParticle(ParticleTypes.CRIT, this.getX(), this.getY() + 2, this.getZ(), 0f, 0f, 0f);
+            this.level.addParticle(ParticleTypes.CRIT, this.getX(), this.getY() + 3, this.getZ(), 0f, 0f, 0f);
+            this.level.addParticle(ParticleTypes.CRIT, this.getX(), this.getY() + 4, this.getZ(), 0f, 0f, 0f);
         }
     }
 

@@ -46,8 +46,6 @@ public class BlizzardStaff extends Item {
             BlizzardMagicProjectileEntity magicProjectile = new BlizzardMagicProjectileEntity(level, player, blockpos);
             magicProjectile.shoot(direction.x, direction.y, direction.z,0.5F, 1.0F);
             level.addFreshEntity(magicProjectile);
-
-            player.awardStat(Stats.ITEM_USED.get(this));
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
@@ -100,7 +98,6 @@ public class BlizzardStaff extends Item {
         positions[22] = new BlockPos(pos.getX(), pos.getY(), pos.getZ()+2);
         positions[23] = new BlockPos(pos.getX()+1, pos.getY(), pos.getZ()+2);
         positions[24] = new BlockPos(pos.getX()+2, pos.getY(), pos.getZ()+2);
-
 
         return positions;
     }
