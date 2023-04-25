@@ -2,6 +2,7 @@ package net.kaupenjoe.magnificentstaffs.event;
 
 import net.kaupenjoe.magnificentstaffs.StaffsMod;
 import net.kaupenjoe.magnificentstaffs.entity.client.BlizzardMagicProjectileModel;
+import net.kaupenjoe.magnificentstaffs.entity.client.BouncingProjectileModel;
 import net.kaupenjoe.magnificentstaffs.entity.client.ClingerWallModel;
 import net.kaupenjoe.magnificentstaffs.entity.client.MagicProjectileModel;
 import net.kaupenjoe.magnificentstaffs.entity.layers.ModModelLayers;
@@ -19,6 +20,7 @@ public class ModEventBusEvents {
         event.registerLayerDefinition(ModModelLayers.MAGIC_PROJECTILE_LAYER, MagicProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.BLIZZARD_PROJECTILE_LAYER, BlizzardMagicProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.CLINGER_WALL_LAYER, ClingerWallModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.BOUNCING_PROJECTILE, BouncingProjectileModel::createBodyLayer);
     }
 
     @SubscribeEvent

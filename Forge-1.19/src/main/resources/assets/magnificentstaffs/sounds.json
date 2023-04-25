@@ -16,5 +16,11 @@
     "sounds": [
       "magnificentstaffs:magic-missle"
     ]
+  },
+  "boulder-sound": {
+    "subtitle": "sounds.magnificentstaffs.boulder-sound",
+    "sounds": [
+      "magnificentstaffs:boulder-sound"
+    ]
   }
 }

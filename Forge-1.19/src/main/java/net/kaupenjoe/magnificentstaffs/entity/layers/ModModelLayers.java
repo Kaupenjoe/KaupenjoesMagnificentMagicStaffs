@@ -13,4 +13,7 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation CLINGER_WALL_LAYER = new ModelLayerLocation(
             new ResourceLocation(StaffsMod.MOD_ID,"clinger_wall_layer"), "clinger_wall_layer");
+
+    public static final ModelLayerLocation BOUNCING_PROJECTILE = new ModelLayerLocation(
+            new ResourceLocation(StaffsMod.MOD_ID,"bouncing_projectile"), "bouncing_projectile");
 }

@@ -15,6 +15,7 @@ public class ModSound {
     public static RegistryObject<SoundEvent> MAGIC_SHOOT = registerSoundEvents("magic-spell-base-lower");
     public static RegistryObject<SoundEvent> MAGIC_IMPACT_1 = registerSoundEvents("magic-impact-1");
     public static RegistryObject<SoundEvent> MAGIC_MISSLE = registerSoundEvents("magic-missle");
+    public static RegistryObject<SoundEvent> BOULDER_SOUND = registerSoundEvents("boulder-sound");
 
 
 

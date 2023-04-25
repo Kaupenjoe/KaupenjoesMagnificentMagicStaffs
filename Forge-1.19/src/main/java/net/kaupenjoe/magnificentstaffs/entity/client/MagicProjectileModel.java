@@ -7,8 +7,9 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.world.entity.projectile.Projectile;
 
-public class MagicProjectileModel<T extends BasicMagicProjectileEntity> extends EntityModel<T> {
+public class MagicProjectileModel<T extends Projectile> extends EntityModel<T> {
     private final ModelPart bb_main;
 
     public MagicProjectileModel(ModelPart root) {
@@ -30,7 +31,7 @@ public class MagicProjectileModel<T extends BasicMagicProjectileEntity> extends 
     }
 
     @Override
-    public void setupAnim(BasicMagicProjectileEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Projectile entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 
