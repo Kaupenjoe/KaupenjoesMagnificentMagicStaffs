@@ -1,10 +1,7 @@
 package net.kaupenjoe.magnificentstaffs.entity;
 
 import net.kaupenjoe.magnificentstaffs.StaffsMod;
-import net.kaupenjoe.magnificentstaffs.entity.custom.BasicMagicProjectileEntity;
-import net.kaupenjoe.magnificentstaffs.entity.custom.BlizzardMagicProjectileEntity;
-import net.kaupenjoe.magnificentstaffs.entity.custom.BouncingProjectileEntity;
-import net.kaupenjoe.magnificentstaffs.entity.custom.ClingerWallEntity;
+import net.kaupenjoe.magnificentstaffs.entity.custom.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,6 +28,14 @@ public class ModEntities {
     public static final RegistryObject<EntityType<BouncingProjectileEntity>> BOUNCING_PROJECTILE = ENTITY_TYPES.register("bouncing_projectile",
             () -> EntityType.Builder.of((EntityType.EntityFactory<BouncingProjectileEntity>)BouncingProjectileEntity::new, MobCategory.MISC)
                     .sized(0.75F, 0.75F).build("bouncing_projectile"));
+
+    public static final RegistryObject<EntityType<BouncingMagicProjectileEntity>> BOUNCING_MAGIC_PROJECTILE = ENTITY_TYPES.register("bouncing_magic_projectile",
+            () -> EntityType.Builder.of((EntityType.EntityFactory<BouncingMagicProjectileEntity>)BouncingMagicProjectileEntity::new, MobCategory.MISC)
+                    .sized(0.55F, 0.55F).build("bouncing_magic_projectile"));
+
+    public static final RegistryObject<EntityType<SeekingMagicProjectileEntity>> SEEKING_MAGIC_PROJECTILE = ENTITY_TYPES.register("seeking_magic_projectile",
+            () -> EntityType.Builder.of((EntityType.EntityFactory<SeekingMagicProjectileEntity>)SeekingMagicProjectileEntity::new, MobCategory.MISC)
+                    .sized(0.55F, 0.55F).build("seeking_magic_projectile"));
 
     public static void register(IEventBus bus) {
         ENTITY_TYPES.register(bus);

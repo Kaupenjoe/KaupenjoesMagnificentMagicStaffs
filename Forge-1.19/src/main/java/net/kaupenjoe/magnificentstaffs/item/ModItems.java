@@ -39,9 +39,9 @@ public class ModItems {
             () -> new ClingerStaff(new Item.Properties().durability(1024)));
 
     public static final RegistryObject<Item> SCULKBEAM_STAFF = ITEMS.register("sculkbeam_staff",
-            () -> new Item(new Item.Properties().durability(128)));
+            () -> new SculkbeamStaff(new Item.Properties().durability(1024)));
     public static final RegistryObject<Item> SPECTRE_STAFF = ITEMS.register("spectre_staff",
-            () -> new Item(new Item.Properties().durability(1024)));
+            () -> new SpectreStaff(new Item.Properties().durability(1024)));
 
     public static final RegistryObject<Item> SAPPHIRE = ITEMS.register("sapphire",
             () -> new Item(new Item.Properties()));
