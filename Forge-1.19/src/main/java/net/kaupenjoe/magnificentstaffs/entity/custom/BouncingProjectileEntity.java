@@ -141,8 +141,8 @@ public class BouncingProjectileEntity extends Projectile {
                 2F, 1F);
 
         LivingEntity livingentity = owner instanceof LivingEntity ? (LivingEntity)owner : null;
-        float damage = 5f;
-        boolean hurt = hitEntity.hurt(this.damageSources().mobProjectile(this, livingentity), damage);
+        float damage = 7.5f;
+        hitEntity.hurt(this.damageSources().mobProjectile(this, livingentity), damage);
     }
 
     @Override
