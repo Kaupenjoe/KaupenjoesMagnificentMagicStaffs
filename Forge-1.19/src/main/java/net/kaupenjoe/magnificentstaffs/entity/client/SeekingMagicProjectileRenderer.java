@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class SeekingMagicProjectileRenderer extends EntityRenderer<SeekingMagicProjectileEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(StaffsMod.MOD_ID, "textures/entity/bouncing_projectile.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(StaffsMod.MOD_ID, "textures/entity/spectre_projectile.png");
     protected BouncingProjectileModel model;
 
     public SeekingMagicProjectileRenderer(EntityRendererProvider.Context context) {
